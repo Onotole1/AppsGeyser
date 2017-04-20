@@ -1,8 +1,10 @@
 package com.spitchenko.appsgeyser.mainwindow.controller;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +23,9 @@ import lombok.NonNull;
  */
 public final class MainActivityController implements BaseActivityController {
     private final AppCompatActivity activity;
+    private LocalBroadcastManager localBroadcastManager;
+    private final MainActivityBroadcastReceiver mainActivityBroadcastReceiver
+            = new MainActivityBroadcastReceiver();
 
     public MainActivityController(final AppCompatActivity activity) {
         this.activity = activity;
@@ -49,12 +54,24 @@ public final class MainActivityController implements BaseActivityController {
 
     @Override
     public final void updateOnResume() {
+        localBroadcastManager = LocalBroadcastManager.getInstance(activity);
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MainActivityBroadcastReceiver.getReceiveActionKey());
+        localBroadcastManager.registerReceiver(mainActivityBroadcastReceiver, intentFilter);
 
+        mainActivityBroadcastReceiver.addObserver(this);
     }
 
     @Override
     public final void updateOnPause() {
+        if (null != localBroadcastManager) {
+            localBroadcastManager.unregisterReceiver(mainActivityBroadcastReceiver);
+        }
+        mainActivityBroadcastReceiver.removeObserver(this);
+    }
 
+    void updateOnUpdate(final String language) {
+        Toast.makeText(activity, "Язык текста " + language, Toast.LENGTH_SHORT).show();
     }
 
     @Override

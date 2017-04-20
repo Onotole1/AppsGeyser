@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author anatoliy
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     private final static int NUMBER_OBSERVERS = 1;
     private final ArrayList<BaseActivityController> observers = new ArrayList<>(NUMBER_OBSERVERS);
 
