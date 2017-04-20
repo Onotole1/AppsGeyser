@@ -38,13 +38,13 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-        notifyObserversOnSavedInstanceState(outState);
+        notifyObserversOnSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(final Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        notifyObserversOnRestoreIntanceState(savedInstanceState);
+        notifyObserversOnRestoreInstanceState(savedInstanceState);
     }
 
     protected void addObserver(final BaseActivityController observer) {
@@ -80,14 +80,14 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    private void notifyObserversOnSavedInstanceState(final Bundle outState) {
+    private void notifyObserversOnSaveInstanceState(final Bundle outState) {
         for (int i = 0, size = observers.size(); i < size; i++) {
             final BaseActivityController observer = observers.get(i);
             observer.updateOnSavedInstanceState(outState);
         }
     }
 
-    private void notifyObserversOnRestoreIntanceState(final Bundle savedInstanceState) {
+    private void notifyObserversOnRestoreInstanceState(final Bundle savedInstanceState) {
         for (int i = 0, size = observers.size(); i < size; i++) {
             final BaseActivityController observer = observers.get(i);
             observer.updateOnRestoreInstanceState(savedInstanceState);

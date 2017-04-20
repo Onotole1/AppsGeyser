@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AppsGeyser</string>
+    <string name="activity_main_edittext_hint">Multiline EditText</string>
 </resources>
