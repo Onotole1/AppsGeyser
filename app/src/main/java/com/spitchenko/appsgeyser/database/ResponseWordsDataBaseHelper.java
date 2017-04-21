@@ -1,11 +1,17 @@
 package com.spitchenko.appsgeyser.database;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.spitchenko.appsgeyser.database.ResponseWordsDataBase.WordsEntry;
+import com.spitchenko.appsgeyser.model.ResponseTrio;
 
+import java.util.ArrayList;
+
+import lombok.Cleanup;
 import lombok.NonNull;
 
 /**
@@ -43,5 +49,37 @@ public class ResponseWordsDataBaseHelper extends SQLiteOpenHelper {
             , final int newVersion) {
         db.execSQL(SQL_DELETE_WORDS_ENTRIES);
         onCreate(db);
+    }
+
+    public void writeWordToDb(final String text, final String language) {
+        @Cleanup
+        final SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        final ContentValues values = new ContentValues();
+
+        values.put(WordsEntry.INPUT_TEXT, text);
+        values.put(WordsEntry.RESPONSE_TEXT, language);
+        sqLiteDatabase.insert(WordsEntry.TABLE_NAME, null, values);
+    }
+
+    public ArrayList<ResponseTrio> readAllFromWordsDb() {
+        @Cleanup
+        final SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        final ArrayList<ResponseTrio> result = new ArrayList<>();
+        @Cleanup
+        final Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "
+                + WordsEntry.TABLE_NAME, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            final ResponseTrio responseTrio = new ResponseTrio();
+            responseTrio.setId(cursor.getLong(cursor.getColumnIndex(WordsEntry._ID)));
+            responseTrio.setInputText(cursor.getString(cursor.getColumnIndex(WordsEntry
+                    .INPUT_TEXT)));
+            responseTrio.setLanguage(cursor.getString(cursor.getColumnIndex(WordsEntry
+                    .RESPONSE_TEXT)));
+            result.add(responseTrio);
+            cursor.moveToNext();
+        }
+
+        return result;
     }
 }
