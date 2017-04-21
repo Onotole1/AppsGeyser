@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">AppsGeyser</string>
-    <string name="activity_main_edittext_hint">Multiline EditText</string>
+    <string name="activity_main_edittext_hint">Введите текст для распознания языка</string>
     <string name="activity_main_drawer_layout_imageView_icon_description">icon</string>
     <string name="drawer_layout_textView_description_add">Новый текст</string>
     <string name="drawer_layout_textView_description_history">История</string>
