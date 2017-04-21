@@ -1,5 +1,6 @@
 package com.spitchenko.appsgeyser.mainwindow.controller;
 
+import android.app.FragmentTransaction;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -134,9 +135,16 @@ public final class MainActivityController implements BaseActivityController {
      * @param language - язык введённого текста
      */
     void updateOnUpdate(final String language) {
-        Toast.makeText(activity
-                , activity.getString(R.string.activity_main_controller_toast_text_succes)
-                + language, Toast.LENGTH_SHORT).show();
+        final Bundle arguments = new Bundle();
+        arguments.putString(ResponseShowDialog.getLanguageKey(), language);
+
+        final ResponseShowDialog responseShowDialog = new ResponseShowDialog();
+        responseShowDialog.setArguments(arguments);
+
+        final FragmentTransaction fragmentTransaction
+                = activity.getFragmentManager().beginTransaction();
+        fragmentTransaction.add(responseShowDialog, ResponseShowDialog.getResponseShowDialogKey());
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override

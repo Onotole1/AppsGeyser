@@ -4,9 +4,10 @@
     <string name="activity_main_drawer_layout_imageView_icon_description">icon</string>
     <string name="drawer_layout_textView_description_add">Новый текст</string>
     <string name="drawer_layout_textView_description_history">История</string>
-    <string name="activity_main_controller_toast_text_succes">Язык текста&#160;</string>
+    <string name="response_show_dialog_text">Язык текста&#160;</string>
     <string name="activity_main_controller_toast_text_length_exception">Введенный текст слишком короткий</string>
     <string name="activity_main_toast_text_empty">Введите текст</string>
     <string name="activity_history_toolbar_title">История</string>
     <string name="drawer_header_logo_content_description">logo</string>
+    <string name="response_show_dialog_ok_button">Ок</string>
 </resources>
