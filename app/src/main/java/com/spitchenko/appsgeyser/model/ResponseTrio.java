@@ -11,6 +11,9 @@ import lombok.Setter;
  * Time: 21:23
  *
  * @author anatoliy
+ *
+ * Объекты данного класса используются для чтения информации из базы данных и формирования объектов.
+ * Объекты передаются через широковещательные сообщения, поэтому имеют интерфейс Parcelable
  */
 public class ResponseTrio implements Parcelable {
     private @Getter @Setter long id;

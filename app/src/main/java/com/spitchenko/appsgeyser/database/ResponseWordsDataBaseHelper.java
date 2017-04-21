@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Parcelable;
 
 import com.spitchenko.appsgeyser.database.ResponseWordsDataBase.WordsEntry;
 import com.spitchenko.appsgeyser.model.ResponseTrio;
@@ -19,6 +20,8 @@ import lombok.NonNull;
  * Time: 16:20
  *
  * @author anatoliy
+ *
+ * Класс обеспечивает доступ к базе данных для хранения истории и чтения элементов.
  */
 public class ResponseWordsDataBaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -51,6 +54,11 @@ public class ResponseWordsDataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Запись в базу данных одного элемента
+     * @param text - введённый текст
+     * @param language - распознаннй язык
+     */
     public void writeWordToDb(final String text, final String language) {
         @Cleanup
         final SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -61,10 +69,16 @@ public class ResponseWordsDataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.insert(WordsEntry.TABLE_NAME, null, values);
     }
 
-    public ArrayList<ResponseTrio> readAllFromWordsDb() {
+    /**
+     * Чтение всех элементов из базы данных
+     * @return - возвращаемое значение в виде ArrayList<Parcelable>, но все элементы
+     * являются объектами ResponseTrio (implements Parcelable). Это сделано для упрощения
+     * передачи объектов через broadcast
+     */
+    public ArrayList<Parcelable> readAllFromWordsDb() {
         @Cleanup
         final SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        final ArrayList<ResponseTrio> result = new ArrayList<>();
+        final ArrayList<Parcelable> result = new ArrayList<>();
         @Cleanup
         final Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "
                 + WordsEntry.TABLE_NAME, null);

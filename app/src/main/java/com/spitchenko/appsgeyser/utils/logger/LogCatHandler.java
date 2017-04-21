@@ -11,6 +11,8 @@ import java.util.logging.LogRecord;
  * Time: 18:19
  *
  * @author anatoliy
+ *
+ * Объект данного класса используется для логирования сообщений.
  */
 public class LogCatHandler extends Handler {
 
@@ -45,6 +47,10 @@ public class LogCatHandler extends Handler {
 
     }
 
+    /**
+     * Интерфейс доступа к логгеру
+     * @param message - сообщения для логгирования
+     */
     public static void publishInfoRecord(final String message) {
         final LogCatHandler logCatHandler = new LogCatHandler();
         final LogRecord record = new LogRecord(Level.INFO, message);

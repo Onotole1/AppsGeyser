@@ -1,4 +1,4 @@
-package com.spitchenko.appsgeyser.base.controller;
+package com.spitchenko.appsgeyser.base.controller.drawer;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -19,10 +19,10 @@ import com.spitchenko.appsgeyser.model.DrawerPair;
  * Time: 10:00
  *
  * @author anatoliy
+ *
+ * Адаптер listView для отображения элементов drawerListView на экране
  */
 public class DrawerListViewAdapter extends ArrayAdapter<DrawerPair> {
-    private boolean isHeader;
-
     public DrawerListViewAdapter(@NonNull final Context context
             , @NonNull final DrawerPair[] objects) {
         super(context, 0, objects);

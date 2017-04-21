@@ -7,6 +7,8 @@ import android.provider.BaseColumns;
  * Time: 16:20
  *
  * @author anatoliy
+ *
+ * Класс содержит название таблицы и колонок для работы с базой данных
  */
 final class ResponseWordsDataBase {
     static abstract class WordsEntry implements BaseColumns {

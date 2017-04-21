@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/drawer_header_padding">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/drawer_list_view_width"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/drawer_header_logo_content_description"/>
 
 </LinearLayout>

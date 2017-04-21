@@ -1,4 +1,4 @@
-package com.spitchenko.appsgeyser.base.controller;
+package com.spitchenko.appsgeyser.base.controller.drawer;
 
 import android.app.Activity;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +12,9 @@ import android.widget.EditText;
  * Time: 23:03
  *
  * @author anatoliy
+ *
+ * Объект данного класса подписывается на изменеия drawerLayout и управляет видимостью
+ * экранной клавиатуры и фокусом textEdit при его появлении на экране
  */
 public class CustomDrawerListener implements DrawerLayout.DrawerListener {
     private final EditText editText;

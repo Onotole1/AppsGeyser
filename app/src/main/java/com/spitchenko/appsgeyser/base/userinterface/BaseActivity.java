@@ -12,6 +12,9 @@ import java.util.ArrayList;
  * Time: 16:06
  *
  * @author anatoliy
+ *
+ * Базовая активность содержит операции со списком наблюдателей.
+ * Такой подход позволяет декомпозировать активность на контроллер и представление
  */
 public abstract class BaseActivity extends AppCompatActivity {
     private final static int NUMBER_OBSERVERS = 1;
@@ -83,7 +86,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void notifyObserversOnSaveInstanceState(final Bundle outState) {
         for (int i = 0, size = observers.size(); i < size; i++) {
             final BaseActivityController observer = observers.get(i);
-            observer.updateOnSavedInstanceState(outState);
+            observer.updateOnSaveInstanceState(outState);
         }
     }
 
@@ -92,5 +95,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             final BaseActivityController observer = observers.get(i);
             observer.updateOnRestoreInstanceState(savedInstanceState);
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

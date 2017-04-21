@@ -12,6 +12,8 @@ import java.util.logging.Logger;
  * Time: 18:10
  *
  * @author anatoliy
+ *
+ * Класс используется для определения версии сборки и логгирования сообщений
  */
 public class AppsGeyserApplication extends Application {
     static {

@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.spitchenko.appsgeyser">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name="com.spitchenko.appsgeyser.AppsGeyserApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".mainwindow.userinterface.MainActivity">
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity
+            android:name="com.spitchenko.appsgeyser.mainwindow.userinterface.MainActivity"
+            android:launchMode="singleInstance"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -19,10 +25,14 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".mainwindow.controller.WordsIntentService"/>
+        <service android:name="com.spitchenko.appsgeyser.mainwindow.controller.MainActivityIntentService"/>
 
-        <activity android:name=".historywindow.userinterface.HistoryActivity">
+        <activity
+            android:name="com.spitchenko.appsgeyser.historywindow.userinterface.HistoryActivity"
+            android:launchMode="singleInstance">
         </activity>
+
+        <service android:name="com.spitchenko.appsgeyser.historywindow.controller.HistoryActivityIntentService"/>
     </application>
 
 </manifest>

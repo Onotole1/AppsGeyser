@@ -1,4 +1,4 @@
-package com.spitchenko.appsgeyser.base.controller;
+package com.spitchenko.appsgeyser.base.controller.drawer;
 
 import android.content.Context;
 import android.view.View;
@@ -17,6 +17,9 @@ import static com.spitchenko.appsgeyser.R.string.drawer_layout_textView_descript
  * Time: 11:03
  *
  * @author anatoliy
+ *
+ * Объект данного класса подписывается на изменения drawerLayout
+ * и обрабатывает нажатия на его элементы
  */
 public class DrawerItemClickListener implements ListView.OnItemClickListener {
     @Override
