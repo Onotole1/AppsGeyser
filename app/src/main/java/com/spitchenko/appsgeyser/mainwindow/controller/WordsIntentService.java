@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
-import com.ibm.watson.developer_cloud.http.ServiceCall;
-import com.ibm.watson.developer_cloud.language_translator.v2.LanguageTranslator;
-import com.ibm.watson.developer_cloud.language_translator.v2.model.IdentifiedLanguage;
+import com.ibm.watson.developer_cloud.alchemy.v1.AlchemyLanguage;
+import com.ibm.watson.developer_cloud.alchemy.v1.model.Language;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.NonNull;
 
@@ -40,14 +40,14 @@ public class WordsIntentService extends IntentService {
     }
 
     private void languageDetect(@NonNull final String inputText) {
-        final LanguageTranslator translation = new LanguageTranslator();
-        translation.setApiKey(API_KEY);
-        final ServiceCall<List<IdentifiedLanguage>> identify = translation.identify(inputText);
-        //В следующей строке я получаю исключение и ошибку с кодом 500
-        final List<IdentifiedLanguage> execute = identify.execute();
-        if (execute.isEmpty()); {
+        final AlchemyLanguage service = new AlchemyLanguage();
+        service.setApiKey(API_KEY);
 
-        }
+        final Map<String, Object> params = new HashMap<>();
+        params.put(AlchemyLanguage.TEXT, inputText);
+
+        final Language language = service.getLanguage(params).execute();
+        System.out.println(language.getLanguage());
     }
 
     public static String getLanguageDetectKey() {
