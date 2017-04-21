@@ -57,9 +57,6 @@ public class HistoryActivityController implements BaseActivityController {
         initToolbar();
 
         initDrawer();
-
-        HistoryActivityIntentService.start(HistoryActivityIntentService.getReadHistoryKey()
-                , activity);
     }
 
     private void initToolbar() {
@@ -112,6 +109,9 @@ public class HistoryActivityController implements BaseActivityController {
         localBroadcastManager.registerReceiver(historyActivityBroadcastReceiver, intentFilter);
 
         historyActivityBroadcastReceiver.addObserver(this);
+
+        HistoryActivityIntentService.start(HistoryActivityIntentService.getReadHistoryKey()
+                , activity);
     }
 
     @Override
