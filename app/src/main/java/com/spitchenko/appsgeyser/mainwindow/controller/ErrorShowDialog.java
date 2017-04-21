@@ -11,22 +11,22 @@ import com.spitchenko.appsgeyser.R;
 
 /**
  * Date: 22.04.17
- * Time: 2:11
+ * Time: 2:30
  *
  * @author anatoliy
  */
-public class ResponseShowDialog extends DialogFragment {
-    private final static String RESPONSE_SHOW_DIALOG =
-            "com.spitchenko.appsgeyser.mainwindow.controller.ResponseShowDialog";
-    private final static String LANGUAGE = RESPONSE_SHOW_DIALOG + ".language";
+public class ErrorShowDialog extends DialogFragment {
+    private final static String ERROR_SHOW_DIALOG =
+            "com.spitchenko.appsgeyser.mainwindow.controller";
+    private final static String ERROR = ERROR_SHOW_DIALOG + ".error";
 
     @Override
     public final Dialog onCreateDialog(@Nullable final Bundle savedInstanceState) {
         final Bundle input = getArguments();
-        final String language = input.getString(LANGUAGE);
+        final String error = input.getString(ERROR);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(getActivity().getString(R.string.response_show_dialog_text) + language)
+        builder.setMessage(error)
                 .setPositiveButton(R.string.show_dialog_ok_button
                         , new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
@@ -35,11 +35,11 @@ public class ResponseShowDialog extends DialogFragment {
         return builder.create();
     }
 
-    public static String getResponseShowDialogKey() {
-        return RESPONSE_SHOW_DIALOG;
+    public static String getErrorShowDialogKey() {
+        return ERROR_SHOW_DIALOG;
     }
 
-    public static String getLanguageKey() {
-        return LANGUAGE;
+    public static String getErrorKey() {
+        return ERROR;
     }
 }

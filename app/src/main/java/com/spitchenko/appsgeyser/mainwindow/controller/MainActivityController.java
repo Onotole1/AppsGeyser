@@ -158,7 +158,17 @@ public final class MainActivityController implements BaseActivityController {
     }
 
     void updateOnLengthException() {
-        Toast.makeText(activity, R.string.activity_main_controller_toast_text_length_exception
-                , Toast.LENGTH_SHORT).show();
+        final Bundle arguments = new Bundle();
+        final String errorMessage = activity
+                .getString(R.string.error_show_dialog_text_length_exception);
+        arguments.putString(ErrorShowDialog.getErrorKey(), errorMessage);
+
+        final ErrorShowDialog errorShowDialog = new ErrorShowDialog();
+        errorShowDialog.setArguments(arguments);
+
+        final FragmentTransaction fragmentTransaction
+                = activity.getFragmentManager().beginTransaction();
+        fragmentTransaction.add(errorShowDialog, ErrorShowDialog.getErrorShowDialogKey());
+        fragmentTransaction.commitAllowingStateLoss();
     }
 }
