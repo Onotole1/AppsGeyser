@@ -10,4 +10,7 @@
     <string name="activity_history_toolbar_title">История</string>
     <string name="drawer_header_logo_content_description">logo</string>
     <string name="show_dialog_ok_button">Ок</string>
+    <string name="no_internet_dialog_internet_message">Подключение к интернету отсутствует</string>
+    <string name="no_internet_dialog_turn_on_internet">Включить</string>
+    <string name="no_internet_dialog_cancel_button">Отменить</string>
 </resources>

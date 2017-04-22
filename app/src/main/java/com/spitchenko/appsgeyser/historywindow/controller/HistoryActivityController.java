@@ -32,7 +32,7 @@ import lombok.NonNull;
  *
  * Объект данного класса содержит логику по взаимодействию с активностью.
  */
-public class HistoryActivityController implements BaseActivityController {
+public class HistoryActivityController extends BaseActivityController {
     private final static String HISTORY_ACTIVITY_CONTROLLER
             = "com.spitchenko.appsgeyser.historywindow.controller.HistoryActivityController";
     private final static String LIST_STATE = HISTORY_ACTIVITY_CONTROLLER + ".listState";
@@ -107,6 +107,7 @@ public class HistoryActivityController implements BaseActivityController {
         localBroadcastManager = LocalBroadcastManager.getInstance(activity);
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(HistoryActivityBroadcastReceiver.getReadActionKey());
+        intentFilter.addAction(HistoryActivityBroadcastReceiver.getNoInternetExceptionKey());
         localBroadcastManager.registerReceiver(historyActivityBroadcastReceiver, intentFilter);
 
         historyActivityBroadcastReceiver.addObserver(this);
@@ -146,5 +147,10 @@ public class HistoryActivityController implements BaseActivityController {
         if (null != listState) {
             listView.onRestoreInstanceState(listState);
         }
+    }
+
+    @Override
+    public void updateOnNoInternetException() {
+        showNetworkDialog(activity);
     }
 }

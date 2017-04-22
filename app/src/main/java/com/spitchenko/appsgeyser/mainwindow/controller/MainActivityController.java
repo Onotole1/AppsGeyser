@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.spitchenko.appsgeyser.R;
 import com.spitchenko.appsgeyser.base.controller.BaseActivityController;
@@ -33,7 +32,7 @@ import lombok.NonNull;
  *
  * Объект данного класса содержит логику по взаимодействию с активностью.
  */
-public final class MainActivityController implements BaseActivityController {
+public final class MainActivityController extends BaseActivityController {
     private final AppCompatActivity activity;
     private LocalBroadcastManager localBroadcastManager;
     private final MainActivityBroadcastReceiver mainActivityBroadcastReceiver
@@ -102,8 +101,7 @@ public final class MainActivityController implements BaseActivityController {
                     MainActivityIntentService.start(MainActivityIntentService.getLanguageDetectKey()
                             , activity, inputText);
                 } else {
-                    Toast.makeText(activity, R.string.activity_main_toast_text_empty
-                            , Toast.LENGTH_SHORT).show();
+                    createErrorDialog(activity.getString(R.string.activity_main_toast_text_empty));
                 }
             }
         });
@@ -115,6 +113,7 @@ public final class MainActivityController implements BaseActivityController {
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MainActivityBroadcastReceiver.getReceiveActionKey());
         intentFilter.addAction(MainActivityBroadcastReceiver.getExceptionActionKey());
+        intentFilter.addAction(MainActivityBroadcastReceiver.getNoInternetExceptionKey());
         localBroadcastManager.registerReceiver(mainActivityBroadcastReceiver, intentFilter);
 
         mainActivityBroadcastReceiver.addObserver(this);
@@ -157,11 +156,19 @@ public final class MainActivityController implements BaseActivityController {
 
     }
 
+    @Override
+    public void updateOnNoInternetException() {
+        showNetworkDialog(activity);
+    }
+
     void updateOnLengthException() {
+        createErrorDialog(activity
+                .getString(R.string.error_show_dialog_text_length_exception));
+    }
+
+    private void createErrorDialog(final String message) {
         final Bundle arguments = new Bundle();
-        final String errorMessage = activity
-                .getString(R.string.error_show_dialog_text_length_exception);
-        arguments.putString(ErrorShowDialog.getErrorKey(), errorMessage);
+        arguments.putString(ErrorShowDialog.getErrorKey(), message);
 
         final ErrorShowDialog errorShowDialog = new ErrorShowDialog();
         errorShowDialog.setArguments(arguments);

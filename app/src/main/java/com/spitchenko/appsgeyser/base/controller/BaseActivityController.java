@@ -1,7 +1,9 @@
 package com.spitchenko.appsgeyser.base.controller;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 
 import lombok.NonNull;
 
@@ -11,33 +13,47 @@ import lombok.NonNull;
  *
  * @author anatoliy
  *
- * Имплементация базового контроллера для декомпозиции активности на представление и контроллер
+ * Абстрактный класс базового контроллера для декомпозиции активности на представление и контроллер
  */
-public interface BaseActivityController {
+public abstract class BaseActivityController extends AppCompatActivity {
     /**
      * Метод содержит логику по инициализации элементов представления
      * @param savedInstanceState - сохранённое состояние при повороте экрана
      */
-    void updateOnCreate(@Nullable final Bundle savedInstanceState);
+    public abstract void updateOnCreate(@Nullable final Bundle savedInstanceState);
     /**
      * Метод вызывается при прохождении жизненного цикла активности для сохранения состояния
      * элементов представления
      * @param outState - объект для записи состояния
      */
-    void updateOnSaveInstanceState(@NonNull final Bundle outState);
+    public abstract void updateOnSaveInstanceState(@NonNull final Bundle outState);
     /**
      * Метод вызывается для восстановления состояния элементов представления
      */
-    void updateOnRestoreInstanceState(@NonNull final Bundle savedInstanceState);
+    public abstract void updateOnRestoreInstanceState(@NonNull final Bundle savedInstanceState);
     /**
      * Данный метод вызывается соответственно очередности жизненного цикла активности
      * и содержит логику по подписке на широковещательные сообщения (аналог конструктора)
      */
-    void updateOnResume();
+    public abstract void updateOnResume();
 
     /**
      * Данный метод вызывается соответственно очередности жизненного цикла активности
      * и содержит логику по отписыванию от широковещательных сообщения (аналог деструктора)
      */
-    void updateOnPause();
+    public abstract void updateOnPause();
+
+    /**
+     * Показать диалог обработки ситуации отсутствия интернета
+     */
+    public abstract void updateOnNoInternetException();
+
+    protected void showNetworkDialog(final AppCompatActivity activity) {
+            final NoInternetDialog noInternetDialog = new NoInternetDialog();
+            final FragmentManager fragmentManager = activity.getFragmentManager();
+            final android.app.FragmentTransaction fragmentTransaction
+                    = fragmentManager.beginTransaction();
+            fragmentTransaction.add(noInternetDialog, NoInternetDialog.getNoInternetDialogKey());
+            fragmentTransaction.commitAllowingStateLoss();
+    }
 }

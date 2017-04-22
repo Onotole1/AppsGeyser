@@ -13,6 +13,9 @@ import com.spitchenko.appsgeyser.database.ResponseWordsDataBaseHelper;
 import com.spitchenko.appsgeyser.historywindow.controller.HistoryActivityBroadcastReceiver;
 import com.spitchenko.appsgeyser.utils.logger.LogCatHandler;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +36,7 @@ public class MainActivityIntentService extends IntentService {
             = "com.spitchenko.appsgeyser.mainwindow.controller.MainActivityIntentService";
     private final static String LANGUAGE_DETECT = WORDS_INTENT_SERVICE + ".languageDetect";
     private final static String API_KEY = "4978e60252ae102dfe1341146bb8cc3ec4bbbd78";
+    private final static String GOOGLE_URL = "https://www.google.ru/";
 
     public MainActivityIntentService() {
         super(WORDS_INTENT_SERVICE);
@@ -54,42 +58,67 @@ public class MainActivityIntentService extends IntentService {
      * @param inputText - исходный текст
      */
     private void languageDetect(@NonNull final String inputText) {
-        final AlchemyLanguage service = new AlchemyLanguage();
-        service.setApiKey(API_KEY);
+        if (checkConnection()) {
+            final AlchemyLanguage service = new AlchemyLanguage();
+            service.setApiKey(API_KEY);
 
-        final Map<String, Object> params = new HashMap<>();
-        params.put(AlchemyLanguage.TEXT, inputText);
+            final Map<String, Object> params = new HashMap<>();
+            params.put(AlchemyLanguage.TEXT, inputText);
 
-        final Language language;
-        try {
+            final Language language;
+            try {
 
-            //Запрос на сервер. Возможны исключительные ситуации
-            language = service.getLanguage(params).execute();
-            //Распознынный язык
-            final String detectLanguage = language.getLanguage();
+                //Запрос на сервер. Возможны исключительные ситуации
+                language = service.getLanguage(params).execute();
+                //Распознынный язык
+                final String detectLanguage = language.getLanguage();
 
-            //Запись результата в базу
-            final ResponseWordsDataBaseHelper responseWordsDataBaseHelper
-                    = new ResponseWordsDataBaseHelper(this);
-            responseWordsDataBaseHelper.writeWordToDb(inputText, detectLanguage);
+                //Запись результата в базу
+                final ResponseWordsDataBaseHelper responseWordsDataBaseHelper
+                        = new ResponseWordsDataBaseHelper(this);
+                responseWordsDataBaseHelper.writeWordToDb(inputText, detectLanguage);
 
-            //Отправка широковещательного сообщения на главный экран
+                //Отправка широковещательного сообщения на главный экран
+                MainActivityBroadcastReceiver.sendToBroadcast(MainActivityBroadcastReceiver
+                        .getReceiveActionKey(), getPackageName(), this, detectLanguage);
+
+                //Чтение всех элементов (в том числе новых) из базы данных
+                final ArrayList<Parcelable> parcelables
+                        = responseWordsDataBaseHelper.readAllFromWordsDb();
+                //Отправка элементов через широковещательное сообщение на экран истории.
+                //Ситуация, когда пользователь успевает перейти на экран истории пока идёт запрос
+                //на сервер маловероятна, но такое требование было в задании
+                HistoryActivityBroadcastReceiver.sendToBroadcast(HistoryActivityBroadcastReceiver
+                        .getReadActionKey(), getPackageName(), this, parcelables);
+            } catch (final BadRequestException e) {
+                MainActivityBroadcastReceiver.sendToBroadcast(MainActivityBroadcastReceiver
+                        .getExceptionActionKey(), getPackageName(), this, null);
+                LogCatHandler.publishInfoRecord(e.getMessage());
+            }
+        } else {
             MainActivityBroadcastReceiver.sendToBroadcast(MainActivityBroadcastReceiver
-                    .getReceiveActionKey(), getPackageName(), this, detectLanguage);
-
-            //Чтение всех элементов (в том числе новых) из базы данных
-            final ArrayList<Parcelable> parcelables
-                    = responseWordsDataBaseHelper.readAllFromWordsDb();
-            //Отправка элементов через широковещательное сообщение на экран истории.
-            //Ситуация, когда пользователь успевает перейти на экран истории пока идёт запрос
-            //на сервер маловероятна, но такое требование было в задании
-            HistoryActivityBroadcastReceiver.sendToBroadcast(parcelables
-                    , HistoryActivityBroadcastReceiver.getReadActionKey(), getPackageName(), this);
-        } catch (final BadRequestException e) {
-            MainActivityBroadcastReceiver.sendToBroadcast(MainActivityBroadcastReceiver
-                    .getExceptionActionKey(), getPackageName(), this, null);
-            LogCatHandler.publishInfoRecord(e.getMessage());
+                    .getNoInternetExceptionKey(), getPackageName(), this, null);
+            HistoryActivityBroadcastReceiver.sendToBroadcast(HistoryActivityBroadcastReceiver
+                    .getNoInternetExceptionKey(), getPackageName(), this, null);
         }
+
+    }
+
+    private boolean checkConnection() {
+        try {
+            final URL httpsLink = new URL(GOOGLE_URL);
+            final HttpURLConnection httpURLConnection
+                    = (HttpURLConnection) httpsLink.openConnection();
+            httpURLConnection.connect();
+            try {
+                return HttpURLConnection.HTTP_OK == httpURLConnection.getResponseCode();
+            } finally {
+                httpURLConnection.disconnect();
+            }
+        } catch (final IOException e) {
+            return false;
+        }
+
 
     }
 

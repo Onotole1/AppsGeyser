@@ -23,15 +23,23 @@ public class MainActivityBroadcastReceiver extends BaseBroadcastReceiver {
     private final static String RECEIVE_ACTION = MAIN_ACTIVITY_BROADCAST_RECEIVER + ".receive";
     private final static String LENGTH_EXCEPTION
             = MAIN_ACTIVITY_BROADCAST_RECEIVER + ".lengthException";
+    private final static String NO_INTERNET_EXCEPTION = MAIN_ACTIVITY_BROADCAST_RECEIVER
+            + ".noInternetException";
 
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
         final String action = intent.getAction();
-        if (action.equals(RECEIVE_ACTION)) {
-            notifyObserversUpdate(intent.getStringExtra(RECEIVE_ACTION));
-        } else if (action.equals(LENGTH_EXCEPTION)) {
-            notifyObserversLengthException();
+        switch (action) {
+            case RECEIVE_ACTION:
+                notifyObserversUpdate(intent.getStringExtra(RECEIVE_ACTION));
+                break;
+            case LENGTH_EXCEPTION:
+                notifyObserversLengthException();
+                break;
+            case NO_INTERNET_EXCEPTION:
+                notifyObserversNoInternet();
+                break;
         }
     }
 
@@ -57,12 +65,26 @@ public class MainActivityBroadcastReceiver extends BaseBroadcastReceiver {
         }
     }
 
+    /**
+     * Метод оповещает подписчиков о ситуации, когда интернет отключен
+     */
+    private void notifyObserversNoInternet() {
+        for (int i = 0, size = observers.size(); i < size; i++) {
+            final MainActivityController observer = (MainActivityController) observers.get(i);
+            observer.updateOnNoInternetException();
+        }
+    }
+
     public static String getReceiveActionKey() {
         return RECEIVE_ACTION;
     }
 
     public static String getExceptionActionKey() {
         return LENGTH_EXCEPTION;
+    }
+
+    public static String getNoInternetExceptionKey() {
+        return NO_INTERNET_EXCEPTION;
     }
 
     /**

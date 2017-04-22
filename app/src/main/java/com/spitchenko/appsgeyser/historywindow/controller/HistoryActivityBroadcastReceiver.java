@@ -3,6 +3,7 @@ package com.spitchenko.appsgeyser.historywindow.controller;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.spitchenko.appsgeyser.base.controller.BaseBroadcastReceiver;
@@ -23,11 +24,16 @@ public class HistoryActivityBroadcastReceiver extends BaseBroadcastReceiver {
     private final static String HISTORY_ACTIVITY_BROADCAST_RECEIVER
             = "com.spitchenko.appsgeyser.historywindow.controller.HistoryActivityBroadcastReceiver";
     private final static String READ_ACTION = HISTORY_ACTIVITY_BROADCAST_RECEIVER + ".readAction";
+    private final static String NO_INTERNET_EXCEPTION = HISTORY_ACTIVITY_BROADCAST_RECEIVER
+            + ".noInternetException";
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
-        if (intent.getAction().equals(READ_ACTION)) {
+        final String action = intent.getAction();
+        if (action.equals(READ_ACTION)) {
             notifyObserversUpdate(intent.getParcelableArrayListExtra(READ_ACTION));
+        } else if (action.equals(NO_INTERNET_EXCEPTION)) {
+            notifyObserversNoInternet();
         }
     }
 
@@ -43,8 +49,22 @@ public class HistoryActivityBroadcastReceiver extends BaseBroadcastReceiver {
         }
     }
 
+    /**
+     * Метод оповещает подписчиков о ситуации, когда интернет отключен
+     */
+    private void notifyObserversNoInternet() {
+        for (int i = 0, size = observers.size(); i < size; i++) {
+            final HistoryActivityController observer = (HistoryActivityController) observers.get(i);
+            observer.updateOnNoInternetException();
+        }
+    }
+
     public static String getReadActionKey() {
         return READ_ACTION;
+    }
+
+    public static String getNoInternetExceptionKey() {
+        return NO_INTERNET_EXCEPTION;
     }
 
     /**
@@ -55,13 +75,15 @@ public class HistoryActivityBroadcastReceiver extends BaseBroadcastReceiver {
      * @param packageName - имя пакета
      * @param context - контекст
      */
-    public static void sendToBroadcast(@NonNull final ArrayList<Parcelable> parcels
-            , @NonNull final String action, @NonNull final String packageName
-            , @NonNull final Context context) {
+    public static void sendToBroadcast(@NonNull final String action
+            , @NonNull final String packageName, @NonNull final Context context
+            , @Nullable final ArrayList<Parcelable> parcels) {
         final Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(action);
         broadcastIntent.setPackage(packageName);
-        broadcastIntent.putParcelableArrayListExtra(action, parcels);
+        if (null != parcels) {
+            broadcastIntent.putParcelableArrayListExtra(action, parcels);
+        }
         LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntent);
     }
 }

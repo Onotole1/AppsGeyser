@@ -46,8 +46,8 @@ public class HistoryActivityIntentService extends IntentService {
         final ResponseWordsDataBaseHelper responseWordsDataBaseHelper
                 = new ResponseWordsDataBaseHelper(this);
         final ArrayList<Parcelable> trios = responseWordsDataBaseHelper.readAllFromWordsDb();
-        HistoryActivityBroadcastReceiver.sendToBroadcast(trios
-                , HistoryActivityBroadcastReceiver.getReadActionKey(), getPackageName(), this);
+        HistoryActivityBroadcastReceiver.sendToBroadcast(HistoryActivityBroadcastReceiver
+                .getReadActionKey(), getPackageName(), this, trios);
     }
 
     public static String getReadHistoryKey() {
