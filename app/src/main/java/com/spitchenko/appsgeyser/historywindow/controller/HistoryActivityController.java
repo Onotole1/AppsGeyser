@@ -20,6 +20,7 @@ import com.spitchenko.appsgeyser.model.DrawerPair;
 import com.spitchenko.appsgeyser.model.ResponseTrio;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import lombok.NonNull;
 
@@ -139,6 +140,7 @@ public class HistoryActivityController implements BaseActivityController {
             }
         }
 
+        Collections.reverse(responseTrios);
         final ListViewAdapter listViewAdapter = new ListViewAdapter(activity, responseTrios);
         listView.setAdapter(listViewAdapter);
         if (null != listState) {
