@@ -5,8 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.spitchenko.appsgeyser.historywindow.userinterface.HistoryActivity;
-import com.spitchenko.appsgeyser.mainwindow.userinterface.MainActivity;
+import com.spitchenko.appsgeyser.base.userinterface.BaseActivity;
 import com.spitchenko.appsgeyser.model.DrawerPair;
 
 import static com.spitchenko.appsgeyser.R.string.drawer_layout_textView_description_add;
@@ -30,10 +29,10 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
         final Context context = view.getContext();
         if (pairDescription.equals(context
                 .getString(drawer_layout_textView_description_add))) {
-            MainActivity.start(context);
+            ((BaseActivity)view.getContext()).setMainFragment();
         } else if (pairDescription.equals(context
                 .getString(drawer_layout_textView_description_history))) {
-            HistoryActivity.start(context);
+            ((BaseActivity)view.getContext()).setHistoryFragment();
         }
 
     }

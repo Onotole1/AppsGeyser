@@ -21,12 +21,12 @@ import lombok.NonNull;
  * Данный класс выполняет ресурсоемкие действия в фоне.
  * Система андроид задаёт особый статус таким фоновым задачам. Прописан в манифесте.
  */
-public class HistoryActivityIntentService extends IntentService {
+public class HistoryFragmentIntentService extends IntentService {
     private final static String HISTORY_ACTIVITY_INTENT_SERVICE
-            = "com.spitchenko.appsgeyser.historywindow.controller.HistoryActivityIntentService";
+            = "com.spitchenko.appsgeyser.historywindow.controller.HistoryFragmentIntentService";
     private final static String READ_HISTORY = HISTORY_ACTIVITY_INTENT_SERVICE + ".readHistory";
 
-    public HistoryActivityIntentService() {
+    public HistoryFragmentIntentService() {
         super(HISTORY_ACTIVITY_INTENT_SERVICE);
     }
 
@@ -46,7 +46,7 @@ public class HistoryActivityIntentService extends IntentService {
         final ResponseWordsDataBaseHelper responseWordsDataBaseHelper
                 = new ResponseWordsDataBaseHelper(this);
         final ArrayList<Parcelable> trios = responseWordsDataBaseHelper.readAllFromWordsDb();
-        HistoryActivityBroadcastReceiver.sendToBroadcast(HistoryActivityBroadcastReceiver
+        HistoryFragmentBroadcastReceiver.sendToBroadcast(HistoryFragmentBroadcastReceiver
                 .getReadActionKey(), getPackageName(), this, trios);
     }
 
@@ -60,7 +60,7 @@ public class HistoryActivityIntentService extends IntentService {
      * @param context - контекст
      */
     public static void start(@NonNull final String action, @NonNull final Context context) {
-        final Intent intent = new Intent(context, HistoryActivityIntentService.class);
+        final Intent intent = new Intent(context, HistoryFragmentIntentService.class);
         intent.setAction(action);
         context.startService(intent);
     }
