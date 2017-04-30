@@ -18,13 +18,13 @@ import lombok.NonNull;
 public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
     private final static int NUMBER_OBSERVERS = 1;
 
-    protected final ArrayList<BaseActivityController> observers = new ArrayList<>(NUMBER_OBSERVERS);
+    protected final ArrayList<BaseFragmentController> observers = new ArrayList<>(NUMBER_OBSERVERS);
 
-    public void addObserver(@NonNull final BaseActivityController observer) {
+    public void addObserver(@NonNull final BaseFragmentController observer) {
         observers.add(observer);
     }
 
-    public void removeObserver(@NonNull final BaseActivityController observer) {
+    public void removeObserver(@NonNull final BaseFragmentController observer) {
         final int index = observers.indexOf(observer);
         if (index >= 0) {
             observers.remove(index);

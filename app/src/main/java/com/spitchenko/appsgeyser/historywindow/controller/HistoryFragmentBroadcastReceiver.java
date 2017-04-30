@@ -20,9 +20,9 @@ import lombok.NonNull;
  *
  * Объект данного класса получает широковещательные сообщения и оповещает о них своих подписчиков
  */
-public class HistoryActivityBroadcastReceiver extends BaseBroadcastReceiver {
+public class HistoryFragmentBroadcastReceiver extends BaseBroadcastReceiver {
     private final static String HISTORY_ACTIVITY_BROADCAST_RECEIVER
-            = "com.spitchenko.appsgeyser.historywindow.controller.HistoryActivityBroadcastReceiver";
+            = "com.spitchenko.appsgeyser.historywindow.controller.HistoryFragmentBroadcastReceiver";
     private final static String READ_ACTION = HISTORY_ACTIVITY_BROADCAST_RECEIVER + ".readAction";
     private final static String NO_INTERNET_EXCEPTION = HISTORY_ACTIVITY_BROADCAST_RECEIVER
             + ".noInternetException";
@@ -44,7 +44,7 @@ public class HistoryActivityBroadcastReceiver extends BaseBroadcastReceiver {
      */
     private void notifyObserversUpdate(final ArrayList<Parcelable> parcelables) {
         for (int i = 0, size = observers.size(); i < size; i++) {
-            final HistoryActivityController observer = (HistoryActivityController) observers.get(i);
+            final HistoryFragmentController observer = (HistoryFragmentController) observers.get(i);
             observer.updateOnUpdate(parcelables);
         }
     }
@@ -54,7 +54,7 @@ public class HistoryActivityBroadcastReceiver extends BaseBroadcastReceiver {
      */
     private void notifyObserversNoInternet() {
         for (int i = 0, size = observers.size(); i < size; i++) {
-            final HistoryActivityController observer = (HistoryActivityController) observers.get(i);
+            final HistoryFragmentController observer = (HistoryFragmentController) observers.get(i);
             observer.updateOnNoInternetException();
         }
     }

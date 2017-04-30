@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_history_drawer_layout"
+    android:id="@+id/fragment_history"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.spitchenko.appsgeyser.historywindow.userinterface.HistoryActivity">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    tools:context="com.spitchenko.appsgeyser.historywindow.userinterface.HistoryFragment">
 
         <android.support.design.widget.AppBarLayout
-            android:id="@+id/activity_history_app_bar"
+            android:id="@+id/fragment_history_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -20,28 +16,18 @@
             <android.support.v7.widget.Toolbar
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/activity_history_toolbar"
+                android:id="@+id/fragment_history_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
         <ListView
-            android:id="@+id/activity_history_list_view"
+            android:id="@+id/fragment_history_list_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_history_app_bar"/>
-    </RelativeLayout>
+            android:layout_below="@+id/fragment_history_app_bar"/>
 
-    <ListView
-        android:id="@+id/activity_history_drawer_list_view"
-        android:layout_width="@dimen/drawer_list_view_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/colorDrawerBackground"
-        android:choiceMode="singleChoice"
-        android:dividerHeight="@dimen/drawer_list_view_divider_height"/>
-
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>

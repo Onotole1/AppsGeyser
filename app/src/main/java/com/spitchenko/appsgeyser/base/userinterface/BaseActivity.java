@@ -16,38 +16,36 @@ import java.util.ArrayList;
  * Базовая активность содержит операции со списком наблюдателей.
  * Такой подход позволяет декомпозировать активность на контроллер и представление
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
     private final static int NUMBER_OBSERVERS = 1;
     private final ArrayList<BaseActivityController> observers = new ArrayList<>(NUMBER_OBSERVERS);
+    private final BaseActivityController baseActivityController = new BaseActivityController(this);
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+        addObserver(baseActivityController);
         super.onCreate(savedInstanceState);
         notifyObserversOnCreate(savedInstanceState);
     }
 
     @Override
     protected void onResume() {
+        addObserver(baseActivityController);
         super.onResume();
-        notifyObserversOnResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        notifyObserversOnPause();
+        if (isFinishing()) {
+            removeObserver(baseActivityController);
+        }
     }
 
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-        notifyObserversOnSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        notifyObserversOnRestoreInstanceState(savedInstanceState);
+        removeObserver(baseActivityController);
     }
 
     protected void addObserver(final BaseActivityController observer) {
@@ -69,32 +67,26 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    private void notifyObserversOnResume() {
+    private void notifyObserversOnSetMainFragment() {
         for (int i = 0, size = observers.size(); i < size; i++) {
             final BaseActivityController observer = observers.get(i);
-            observer.updateOnResume();
+            observer.updateOnSetMainFragment();
         }
     }
 
-    private void notifyObserversOnPause() {
+    private void notifyObserversOnSetHistoryFragment() {
         for (int i = 0, size = observers.size(); i < size; i++) {
             final BaseActivityController observer = observers.get(i);
-            observer.updateOnPause();
+            observer.updateOnHistoryFragment();
         }
     }
 
-    private void notifyObserversOnSaveInstanceState(final Bundle outState) {
-        for (int i = 0, size = observers.size(); i < size; i++) {
-            final BaseActivityController observer = observers.get(i);
-            observer.updateOnSaveInstanceState(outState);
-        }
+    public void setMainFragment() {
+        notifyObserversOnSetMainFragment();
     }
 
-    private void notifyObserversOnRestoreInstanceState(final Bundle savedInstanceState) {
-        for (int i = 0, size = observers.size(); i < size; i++) {
-            final BaseActivityController observer = observers.get(i);
-            observer.updateOnRestoreInstanceState(savedInstanceState);
-        }
+    public void setHistoryFragment() {
+        notifyObserversOnSetHistoryFragment();
     }
 
     @Override

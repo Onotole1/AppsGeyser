@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name="com.spitchenko.appsgeyser.mainwindow.userinterface.MainActivity"
+            android:name="com.spitchenko.appsgeyser.base.userinterface.BaseActivity"
             android:launchMode="singleInstance"
             >
             <intent-filter>
@@ -27,12 +27,7 @@
 
         <service android:name="com.spitchenko.appsgeyser.mainwindow.controller.MainActivityIntentService"/>
 
-        <activity
-            android:name="com.spitchenko.appsgeyser.historywindow.userinterface.HistoryActivity"
-            android:launchMode="singleInstance">
-        </activity>
-
-        <service android:name="com.spitchenko.appsgeyser.historywindow.controller.HistoryActivityIntentService"/>
+        <service android:name="com.spitchenko.appsgeyser.historywindow.controller.HistoryFragmentIntentService"/>
     </application>
 
 </manifest>

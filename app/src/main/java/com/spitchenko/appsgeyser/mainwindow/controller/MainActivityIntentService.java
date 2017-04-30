@@ -10,7 +10,7 @@ import com.ibm.watson.developer_cloud.alchemy.v1.AlchemyLanguage;
 import com.ibm.watson.developer_cloud.alchemy.v1.model.Language;
 import com.ibm.watson.developer_cloud.service.exception.BadRequestException;
 import com.spitchenko.appsgeyser.database.ResponseWordsDataBaseHelper;
-import com.spitchenko.appsgeyser.historywindow.controller.HistoryActivityBroadcastReceiver;
+import com.spitchenko.appsgeyser.historywindow.controller.HistoryFragmentBroadcastReceiver;
 import com.spitchenko.appsgeyser.utils.logger.LogCatHandler;
 
 import java.io.IOException;
@@ -88,7 +88,7 @@ public class MainActivityIntentService extends IntentService {
                 //Отправка элементов через широковещательное сообщение на экран истории.
                 //Ситуация, когда пользователь успевает перейти на экран истории пока идёт запрос
                 //на сервер маловероятна, но такое требование было в задании
-                HistoryActivityBroadcastReceiver.sendToBroadcast(HistoryActivityBroadcastReceiver
+                HistoryFragmentBroadcastReceiver.sendToBroadcast(HistoryFragmentBroadcastReceiver
                         .getReadActionKey(), getPackageName(), this, parcelables);
             } catch (final BadRequestException e) {
                 MainActivityBroadcastReceiver.sendToBroadcast(MainActivityBroadcastReceiver
@@ -98,7 +98,7 @@ public class MainActivityIntentService extends IntentService {
         } else {
             MainActivityBroadcastReceiver.sendToBroadcast(MainActivityBroadcastReceiver
                     .getNoInternetExceptionKey(), getPackageName(), this, null);
-            HistoryActivityBroadcastReceiver.sendToBroadcast(HistoryActivityBroadcastReceiver
+            HistoryFragmentBroadcastReceiver.sendToBroadcast(HistoryFragmentBroadcastReceiver
                     .getNoInternetExceptionKey(), getPackageName(), this, null);
         }
 

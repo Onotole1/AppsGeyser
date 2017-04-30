@@ -48,7 +48,7 @@ public class MainActivityBroadcastReceiver extends BaseBroadcastReceiver {
      */
     private void notifyObserversLengthException() {
         for (int i = 0, size = observers.size(); i < size; i++) {
-            final MainActivityController observer = (MainActivityController) observers.get(i);
+            final MainFragmentController observer = (MainFragmentController) observers.get(i);
             observer.updateOnLengthException();
         }
     }
@@ -60,7 +60,7 @@ public class MainActivityBroadcastReceiver extends BaseBroadcastReceiver {
      */
     private void notifyObserversUpdate(final String language) {
         for (int i = 0, size = observers.size(); i < size; i++) {
-            final MainActivityController observer = (MainActivityController) observers.get(i);
+            final MainFragmentController observer = (MainFragmentController) observers.get(i);
             observer.updateOnUpdate(language);
         }
     }
@@ -70,7 +70,7 @@ public class MainActivityBroadcastReceiver extends BaseBroadcastReceiver {
      */
     private void notifyObserversNoInternet() {
         for (int i = 0, size = observers.size(); i < size; i++) {
-            final MainActivityController observer = (MainActivityController) observers.get(i);
+            final MainFragmentController observer = (MainFragmentController) observers.get(i);
             observer.updateOnNoInternetException();
         }
     }
