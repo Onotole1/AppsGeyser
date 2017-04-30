@@ -8,9 +8,9 @@
     tools:context=".base.userinterface.BaseActivity">
 
     <FrameLayout
+        android:id="@+id/activity_base_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/activity_base_container">
+        android:layout_height="match_parent">
     </FrameLayout>
 
     <ListView
@@ -20,5 +20,6 @@
         android:layout_gravity="start"
         android:background="@color/colorBackgroundWhite"
         android:choiceMode="singleChoice"
+        android:divider="#00000000"
         android:dividerHeight="@dimen/drawer_list_view_divider_height"/>
 </android.support.v4.widget.DrawerLayout>

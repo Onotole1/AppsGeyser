@@ -83,8 +83,7 @@ public class BaseActivityController extends AppCompatActivity {
             if (fragmentByTag.isVisible()) {
                 drawerLayout.closeDrawers();
             } else {
-                manager.popBackStack(MainFragment.getMainFragment()
-                        , FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                manager.popBackStackImmediate();
                 replaceMainFragment(manager);
             }
         }
@@ -107,8 +106,7 @@ public class BaseActivityController extends AppCompatActivity {
             if (fragmentByTag.isVisible()) {
                 drawerLayout.closeDrawers();
             } else {
-                manager.popBackStack(HistoryFragment.getHistoryFragment()
-                        , FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                manager.popBackStackImmediate();
                 replaceHistoryFragment(manager);
             }
         }
@@ -120,5 +118,11 @@ public class BaseActivityController extends AppCompatActivity {
                 , HistoryFragment.getHistoryFragment());
         fragmentTransaction.addToBackStack(HistoryFragment.getHistoryFragment());
         fragmentTransaction.commit();
+    }
+
+    public void updateOnSupportNavigateUp() {
+        final FragmentManager manager = activity.getFragmentManager();
+        manager.popBackStackImmediate();
+        System.out.println();
     }
 }

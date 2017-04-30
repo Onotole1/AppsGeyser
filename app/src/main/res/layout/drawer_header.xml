@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/drawer_list_view_width"
-        android:src="@drawable/logo"
-        android:contentDescription="@string/drawer_header_logo_content_description"/>
+        android:contentDescription="@string/drawer_header_logo_content_description"
+        android:src="@drawable/logo"/>
 
 </LinearLayout>

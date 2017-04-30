@@ -91,7 +91,14 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
+        notifyObserversOnSupportNavigateUp();
         return true;
+    }
+
+    private void notifyObserversOnSupportNavigateUp() {
+        for (int i = 0, size = observers.size(); i < size; i++) {
+            final BaseActivityController observer = observers.get(i);
+            observer.updateOnSupportNavigateUp();
+        }
     }
 }
