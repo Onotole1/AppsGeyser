@@ -90,12 +90,16 @@ public class BaseActivityController extends AppCompatActivity {
                 , drawerListView, false);
         drawerListView.addHeaderView(header, null, false);
 
-
-        if (isMainFragmentOnTheWindow()) {
-            selectMainFragment();
-        } else if (isHistoryFragmentOnTheWindow()) {
-            selectHistoryFragment();
-        }
+        drawerListView.post(new Runnable() {
+            @Override
+            public void run() {
+                if (isMainFragmentOnTheWindow()) {
+                    selectMainFragment();
+                } else if (isHistoryFragmentOnTheWindow()) {
+                    selectHistoryFragment();
+                }
+            }
+        });
     }
 
     private boolean isMainFragmentOnTheWindow() {
