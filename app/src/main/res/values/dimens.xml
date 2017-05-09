@@ -5,8 +5,10 @@
     <dimen name="activity_main_floatingactionbutton_margin">12dp</dimen>
     <dimen name="fragment_main_edittext_padding">12dp</dimen>
     <dimen name="activity_main_edittext_width">300dp</dimen>
-    <dimen name="drawer_list_view_width">240dp</dimen>
+    <dimen name="drawer_list_view_width">300dp</dimen>
     <dimen name="drawer_list_view_divider_height">0dp</dimen>
     <dimen name="activity_history_text_padding">12dp</dimen>
     <dimen name="drawer_header_padding">3dp</dimen>
+    <dimen name="drawer_header_drawable_width">300dp</dimen>
+    <dimen name="drawer_header_drawable_height">170dp</dimen>
 </resources>
