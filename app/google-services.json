@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1008675261347",
+    "firebase_url": "https://appsgeyser-test.firebaseio.com",
+    "project_id": "appsgeyser-test",
+    "storage_bucket": "appsgeyser-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008675261347:android:1976238c95dd0ed0",
+        "android_client_info": {
+          "package_name": "com.spitchenko.appsgeyser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1008675261347-0k3jdrsdeknbd6jhd54s248huqthccn2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB_ILqdZ7hTq2KblND46fKWaNbn5UUnug"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

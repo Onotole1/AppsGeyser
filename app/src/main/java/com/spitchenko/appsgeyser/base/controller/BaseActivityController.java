@@ -132,14 +132,14 @@ public class BaseActivityController extends AppCompatActivity {
     }
 
     private void selectMainFragment() {
-        View mainFragmentItem = drawerListView.getChildAt(1);
+        final View mainFragmentItem = drawerListView.getChildAt(1);
         mainFragmentItem.setBackgroundColor(activity.getResources().getColor(R.color.selected));
 
-        TextView mainFragmentText
+        final TextView mainFragmentText
                 = (TextView) mainFragmentItem.findViewById(R.id.drawer_element_textView_description);
         mainFragmentText.setTextColor(activity.getResources().getColor(R.color.colorPrimary));
 
-        ImageView mainFragmentIcon
+        final ImageView mainFragmentIcon
                 = (ImageView) mainFragmentItem.findViewById(R.id.drawer_element_imageView_icon);
 
         final Drawable mainFragmentIconDrawable = mainFragmentIcon.getDrawable();
@@ -147,14 +147,14 @@ public class BaseActivityController extends AppCompatActivity {
                 .getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP));
         mainFragmentIcon.setImageDrawable(mainFragmentIconDrawable);
 
-        View historyFragmentItem = drawerListView.getChildAt(2);
+        final View historyFragmentItem = drawerListView.getChildAt(2);
         historyFragmentItem.setBackgroundColor(Color.TRANSPARENT);
 
-        TextView historyFragmentText
+        final TextView historyFragmentText
                 = (TextView) historyFragmentItem.findViewById(R.id.drawer_element_textView_description);
         historyFragmentText.setTextColor(Color.GRAY);
 
-        ImageView historyFragmentIcon
+        final ImageView historyFragmentIcon
                 = (ImageView) historyFragmentItem.findViewById(R.id.drawer_element_imageView_icon);
 
         final Drawable historyFragmentIconDrawable = historyFragmentIcon.getDrawable();
@@ -164,14 +164,14 @@ public class BaseActivityController extends AppCompatActivity {
     }
 
     private void selectHistoryFragment() {
-        View mainFragmentItem = drawerListView.getChildAt(1);
+        final View mainFragmentItem = drawerListView.getChildAt(1);
         mainFragmentItem.setBackgroundColor(Color.TRANSPARENT);
 
-        TextView mainFragmentText
+        final TextView mainFragmentText
                 = (TextView) mainFragmentItem.findViewById(R.id.drawer_element_textView_description);
         mainFragmentText.setTextColor(Color.GRAY);
 
-        ImageView mainFragmentIcon
+        final ImageView mainFragmentIcon
                 = (ImageView) mainFragmentItem.findViewById(R.id.drawer_element_imageView_icon);
 
         final Drawable mainFragmentIconDrawable = mainFragmentIcon.getDrawable();
@@ -179,14 +179,14 @@ public class BaseActivityController extends AppCompatActivity {
                 , PorterDuff.Mode.SRC_ATOP));
         mainFragmentIcon.setImageDrawable(mainFragmentIconDrawable);
 
-        View historyFragmentItem = drawerListView.getChildAt(2);
+        final View historyFragmentItem = drawerListView.getChildAt(2);
         historyFragmentItem.setBackgroundColor(activity.getResources().getColor(R.color.selected));
 
-        TextView historyFragmentText
+        final TextView historyFragmentText
                 = (TextView) historyFragmentItem.findViewById(R.id.drawer_element_textView_description);
         historyFragmentText.setTextColor(activity.getResources().getColor(R.color.colorPrimary));
 
-        ImageView historyFragmentIcon
+        final ImageView historyFragmentIcon
                 = (ImageView) historyFragmentItem.findViewById(R.id.drawer_element_imageView_icon);
 
         final Drawable historyFragmentIconDrawable = historyFragmentIcon.getDrawable();
